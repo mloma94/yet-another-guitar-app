@@ -6,7 +6,9 @@ authors = [
     {name = "Moises Loma",email = "moiseslomaosorio@gmail.com"}
 ]
 requires-python = ">=3.13"
-dependencies = [
+dependencies = []
+packages = [
+    { include = "app" }
 ]
 
 
