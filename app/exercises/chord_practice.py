@@ -3,6 +3,7 @@ import time
 from dataclasses import dataclass
 from typing import Generator, List, Optional
 
+from app.exercises._exercise import Exercise
 from app.music.chord import Chord
 
 
@@ -98,3 +99,20 @@ def chord_practice(frequency: int, difficulty: int) -> Generator[Chord, None, No
         yield chord
 
         time.sleep(frequency_seconds)
+
+
+@dataclass
+class ChordPractice(Exercise):
+
+    def __init__(self, frequency: int, difficulty: int):
+        self.frequency = frequency
+        self.difficulty = difficulty
+
+    def name(self) -> str:
+        return "Chord Practice"
+    
+    def category(self) -> str:
+        return "Basics"
+
+    def generate_exercise(self) -> Generator[Chord, None, None]:
+        return chord_practice(self.frequency, self.difficulty)
