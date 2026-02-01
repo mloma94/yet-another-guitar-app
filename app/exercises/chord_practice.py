@@ -19,11 +19,11 @@ class DifficultyConfig:
 
 # Core root and quality sets
 _ALL_ROOTS = [
-    'A♭', 'A', 'A#', 'B♭', 'B', 'C', 'C#', 'D♭', 'D', 'D#', 'E♭', 'E', 'F', 'F#', 'G♭',
+    'Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb',
     'G', 'G#'
 ]
 _EASY_ROOTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-_MEDIUM_ROOTS = _EASY_ROOTS + ['B♭', 'C#','D#', 'F#', 'G#']
+_MEDIUM_ROOTS = _EASY_ROOTS + ['Bb', 'C#','D#', 'F#', 'G#']
 
 _EASY_QUALITIES = ["", "m"]
 _MEDIUM_QUALITIES = ["", "m", "7"]

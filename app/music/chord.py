@@ -12,7 +12,7 @@ class Chord:
     Attributes:
         root (str): The root note of the chord.
             Possible values:
-            ['A♭', 'A', 'A#', 'B♭', 'B', 'C', 'C#', 'D♭', 'D', 'D#', 'E♭', 'E', 'F', 'F#', 'G♭',
+            ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb',
             'G', 'G#']
 
         quality (str): The chord quality/type.
