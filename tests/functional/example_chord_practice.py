@@ -16,11 +16,12 @@ def test_exercise():
 
     frequency = int(input("Enter frequency in seconds: "))
     difficulty = int(input("Enter difficulty level (1-5): "))
+    n = int(input("Enter number of chords to generate: "))
 
     exercise = ChordPractice(frequency=frequency * 1000, difficulty=difficulty)
     
-    # Take only the first 5 chords using itertools.islice
-    for i, chord in enumerate(itertools.islice(exercise.generate_exercise(), 5)):
+    # Take only the first n chords using itertools.islice
+    for i, chord in enumerate(itertools.islice(exercise.generate_exercise(), n)):
         print(f"Chord {i+1}: {chord.display_name()}")
 
 
