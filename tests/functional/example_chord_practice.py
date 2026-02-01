@@ -6,6 +6,7 @@ Run from the project root with: python -m tests.functional.example_chord_practic
 """
 
 import itertools
+import time
 
 from app.exercises.chord_practice import ChordPractice
 
@@ -18,12 +19,12 @@ def test_exercise():
     difficulty = int(input("Enter difficulty level (1-5): "))
     n = int(input("Enter number of chords to generate: "))
 
-    exercise = ChordPractice(frequency=frequency * 1000, difficulty=difficulty)
+    exercise = ChordPractice(difficulty)
     
     # Take only the first n chords using itertools.islice
     for i, chord in enumerate(itertools.islice(exercise.generate_exercise(), n)):
         print(f"Chord {i+1}: {chord.display_name()}")
-
+        time.sleep(frequency)
 
 if __name__ == "__main__":
     test_exercise()

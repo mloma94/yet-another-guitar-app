@@ -58,7 +58,7 @@ LEVELS = {
 }
 
 
-def chord_practice(frequency: int, difficulty: int) -> Generator[Chord, None, None]:
+def chord_practice(difficulty: int) -> Generator[Chord, None, None]:
     """Generate chords at a given interval using a difficulty configuration.
 
     The function uses the `LEVELS` mapping to obtain a `DifficultyConfig` for the
@@ -66,7 +66,6 @@ def chord_practice(frequency: int, difficulty: int) -> Generator[Chord, None, No
     key/value to the `LEVELS` dict with a `DifficultyConfig` describing the behavior.
 
     Args:
-        frequency (int): Milliseconds between prompts.
         difficulty (int): Difficulty level (must be a key in `LEVELS`).
 
     Yields:
@@ -79,8 +78,6 @@ def chord_practice(frequency: int, difficulty: int) -> Generator[Chord, None, No
     config = LEVELS.get(difficulty)
     if config is None:
         raise ValueError("unknown difficulty; add a matching entry to LEVELS")
-
-    frequency_seconds = frequency / 1000.0  # Convert milliseconds to seconds
 
     while True:
         root = random.choice(config.roots)
@@ -98,14 +95,11 @@ def chord_practice(frequency: int, difficulty: int) -> Generator[Chord, None, No
         chord = Chord(root=root, quality=quality, extensions=extensions, alterations=alterations)
         yield chord
 
-        time.sleep(frequency_seconds)
-
 
 @dataclass
 class ChordPractice(Exercise):
 
-    def __init__(self, frequency: int, difficulty: int):
-        self.frequency = frequency
+    def __init__(self, difficulty: int):
         self.difficulty = difficulty
 
     def name(self) -> str:
@@ -115,4 +109,4 @@ class ChordPractice(Exercise):
         return "Basics"
 
     def generate_exercise(self) -> Generator[Chord, None, None]:
-        return chord_practice(self.frequency, self.difficulty)
+        return chord_practice(self.difficulty)

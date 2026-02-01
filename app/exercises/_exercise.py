@@ -9,14 +9,12 @@ class Exercise(ABC):
     naming, categorizing, and generating exercise content.
     """
 
-    def __init__(self, frequency: int, difficulty: int):
-        """Initialize an exercise with frequency and difficulty settings.
+    def __init__(self, difficulty: int):
+        """Initialize an exercise with difficulty settings.
         
         Args:
-            frequency (int): Milliseconds between prompts.
             difficulty (int): Difficulty level.
         """
-        self.frequency = frequency
         self.difficulty = difficulty
 
     @abstractmethod

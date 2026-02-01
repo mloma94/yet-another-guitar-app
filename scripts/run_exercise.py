@@ -19,6 +19,7 @@ Usage:
 import argparse
 import itertools
 import sys
+import time
 
 from app.exercises.chord_practice import ChordPractice
 
@@ -67,7 +68,6 @@ def main():
     # Instantiate and run the exercise
     exercise_class = exercises[args.exercise_name]
     exercise = exercise_class(
-        frequency=args.frequency,
         difficulty=args.difficulty
     )
 
@@ -80,6 +80,7 @@ def main():
     if exercise_name == "Chord Practice":
         for chord in itertools.islice(generator, n):
             print(f"{chord.display_name()}")
+            time.sleep(args.frequency / 1000.0)  # Convert ms to seconds
 
 
 if __name__ == "__main__":
