@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Guitar Trainer – Chord Practice</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 80px;
+        }
+        #chord {
+            font-size: 64px;
+            margin: 40px 0;
+        }
+        #countdown {
+            font-size: 32px;
+            color: #666;
+            margin: 20px 0;
+            height: 40px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chord Practice</h1>
+
+    <button id="start">Start Exercise</button>
+
+    <div id="chord">–</div>
+
+    <div id="countdown"></div>
+
+    <script>
+        const INTERVAL_MS = 5000; // 5 seconds
+        let sessionId = null;
+        let intervalId = null;
+        let countdownId = null;
+
+        function startCountdown(seconds, callback) {
+            let remaining = seconds;
+            const countdownEl = document.getElementById("countdown");
+            
+            if (countdownId) {
+                clearInterval(countdownId);
+            }
+            
+            countdownEl.textContent = remaining;
+            
+            countdownId = setInterval(() => {
+                remaining--;
+                if (remaining > 0) {
+                    countdownEl.textContent = remaining;
+                } else {
+                    clearInterval(countdownId);
+                    countdownEl.textContent = "";
+                    callback();
+                }
+            }, 1000);
+        }
+
+        async function startExercise() {
+            const response = await fetch("/exercise/chord-practice/start", {
+                method: "POST"
+            });
+
+            const data = await response.json();
+            sessionId = data.session_id;
+
+            document.getElementById("chord").textContent = "Get ready...";
+            
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+            if (countdownId) {
+                clearInterval(countdownId);
+            }
+
+            startCountdown(3, async () => {
+                await nextChord();
+                // Auto-advance every X seconds
+                intervalId = setInterval(nextChord, INTERVAL_MS);
+            });
+        }
+
+        async function nextChord() {
+            if (!sessionId) return;
+
+            const response = await fetch(
+                `/exercise/chord-practice/${sessionId}/next`
+            );
+
+            const data = await response.json();
+
+            if (data.message === "Exercise complete") {
+                document.getElementById("chord").textContent = "Exercise Complete!";
+                document.getElementById("countdown").textContent = "";
+                clearInterval(intervalId);
+                intervalId = null;
+                return;
+            }
+
+            document.getElementById("chord").textContent = data.prompt;
+            startCountdown(INTERVAL_MS / 1000, () => {});
+        }
+
+        document.getElementById("start").onclick = startExercise;
+    </script>
+
+</body>
+</html>
